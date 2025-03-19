@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 
-// Interface Segregation: Define a specific interface for salary calculation
 interface ISalaryCalculator
 {
     decimal CalculateSalary(decimal baseSalary);
 }
 
-// Single Responsibility: Each class has a single responsibility
+
 class PermanentEmployeeSalary : ISalaryCalculator
 {
     public decimal CalculateSalary(decimal baseSalary) => baseSalary + (baseSalary * 0.2m);
@@ -18,7 +17,7 @@ class ContractEmployeeSalary : ISalaryCalculator
     public decimal CalculateSalary(decimal baseSalary) => baseSalary;
 }
 
-// Single Responsibility: Employee class handles employee data and salary calculation
+
 class Employee
 {
     public int Id { get; }
@@ -27,8 +26,7 @@ class Employee
     public decimal CalculatedSalary { get; private set; }
     private ISalaryCalculator _salaryCalculator;
 
-    // Dependency Inversion: Depend on abstractions (ISalaryCalculator) rather than concrete classes
-    // Liskov Substitution: Any implementation of ISalaryCalculator can be used here
+
     public Employee(int id, string name, decimal baseSalary, ISalaryCalculator salaryCalculator)
     {
         Id = id;
@@ -38,7 +36,6 @@ class Employee
         CalculatedSalary = _salaryCalculator.CalculateSalary(baseSalary);
     }
 
-    // Open/Closed: Can extend with new salary types without modifying existing code
     public void UpdateSalaryTypeAndBaseSalary(ISalaryCalculator newSalaryCalculator, decimal newBaseSalary)
     {
         _salaryCalculator = newSalaryCalculator;
@@ -58,7 +55,6 @@ class Employee
     }
 }
 
-// Single Responsibility: Program class handles user interaction and program flow
 class Program
 {
     static List<Employee> employees = new List<Employee>();
